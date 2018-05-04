@@ -1,4 +1,26 @@
-## Welcome to GitHub Pages
+# Synthetic Control Model
+
+Hello! That you for viewing my project - "U.S. Gun Laws & Gun Deaths."  The goal of this project was to explore the relationship (if any) between gun laws and gun deaths in the United States.  Furthermore, the project uses the synthetic control model to analyze the effect of Oregon's background check laws that were implemented in 2000.  Unfornately, mass shootings have become more and more common in the United States, and as a result, policy dicussions arise that try to ascertain the best course of action.  Finding solutions to reduce gun violence in the U.S. is important because it has real world implications and lives are on the line.
+
+The data for this project comes from a variety of sources, which will be outlined in a citations section at the end of this project. However, all of the data came from publicly available datasets and the majority of the data came from places like the Center for Disease control, Census Bureau, FBI, and the Bureau of Labor Statistics.
+
+The analysis can be broken up into two sections:
+
+1) Exploratory Data Analysis
+2) Contructing the Synthetic Control
+
+Link To Code goes here
+Link to datasets goes here
+
+
+### Section 1: Exploratory Data Analysis
+
+What has been the relationship between gun laws and gun deaths over the past decade and a half? Which states have the highest crude firearm death rate? Which states are the most/least strict when it comes to gun laws? These are the questions this section will attempt to answer.  Here, we will consider the period from 1999-2016 to do our initial analysis.
+
+It is important to note that this data, which comes from the CDC, uses the "Crude Death Rate" as a measure of gun deaths in the United States.  This rate is standardized for each state since it is per 100,000 people.  By calling the .describe() method on our dataframe, 
+
+
+
 
 You can use the [editor on GitHub](https://github.com/TCummings03/SyntheticControl/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
