@@ -17,10 +17,15 @@ Link to datasets goes here
 
 What has been the relationship between gun laws and gun deaths over the past decade and a half? Which states have the highest crude firearm death rate? Which states are the most/least strict when it comes to gun laws? These are the questions this section will attempt to answer.  Here, we will consider the period from 1999-2016 to do our initial analysis.
 
-It is important to note that this data, which comes from the CDC, uses the "Crude Death Rate" as a measure of gun deaths in the United States.  This rate is standardized for each state since it is per 100,000 people.  By calling the .describe() method on our dataframe, 
+It is important to note that this data, which comes from the CDC, uses the "Crude Death Rate" as a measure of gun deaths in the United States.  This rate is standardized for each state since it is per 100,000 people. Here is a sample of the dataframe below:
 
+![Initialdf](https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/initialdf_head.png)
 
+By calling the .describe() pandas method on our dataframe, we can learn a few things about the data:
 
+- The average gun death rate in the U.S. from 1999 - 2016 was 11.46, and the median death rate was 11.2
+- The min and max cases, 2.2 and 34.0 respectively, are states with either relatively high death rates or relatively low death rates
+- The standard deviation was 4.43 over time time period, which means that 95% of the data lies between a gun death rate of 2.6 and 20.29
 
 You can use the [editor on GitHub](https://github.com/TCummings03/SyntheticControl/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
