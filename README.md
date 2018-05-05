@@ -43,6 +43,66 @@ One of the most important thing to note about the plot above is that there are t
 
 Another interesting note on the relationship between these two figures is that after Sandy hook not only do we see an increase in the number of gun laws passed, but we also see a fairly dramatic increase in the crude death rate in the U.S. as well. Although this project will not touch on those events specifically, they are interesting to note and would benefit from further analysis. 
 
+### Linear Regression (Gun Deaths & Gun policies)
+
+Explain where the gun law data came from. How many laws, the type of categories etc.
+
+The data on gun laws for this project came from a kaggle dataset, which in part, was coded by the Boston University School of Public Health.  The full dataset incldues 133 laws on firearms across 50 states and Washington, DC.  However, this project will focus mainly on the 50 states.  The 133 laws can be broken down into 14 distinct categories:
+
+- Dealer regulations
+- Buyer regulations
+- Prohibitions for high-risk gun possession
+- Background checks
+- Ammunition regulations
+- Possession regulations
+- Concealed carry permitting
+- Assault weapons and large-capacity magazines
+- Child access prevention
+- Gun trafficking
+- Stand your ground
+- Preemption
+- Immunity
+- Domestic violence
+
+Condensing the 133 laws into these 14 categories will allow us to potentially gain more insight into the types of laws that have impact on the gun death rate.  After condesing the 133 laws, I ran an OLS regression on the data, which yielded the following results:
+
+| RMSE          | Test R^2      | Train R^2  | Avg. 5 fold CV   |
+| ------------- |:-------------:| :-----:|:----------------------:|
+| 2.849     | 0.536 | 0.553 |0.518|
+
+Largest Positive Coefficients:
+
+|Features|	Estimated Coefficients|
+|:-------:|:----------------------:|
+|Asltweap_and_largemags|	0.428 |
+|Ammunition_reg|	0.386|
+|Conceal_carry_perm	|0.258|
+|Poss_reg |	0.180 |
+|Domestic_violence	|0.075 |
+|Dealer_reg |	0.035|
+
+Largest Negative Coefficients: 
+
+|Features|	Estimated Coefficients|
+|:-------:|:----------------------:|
+|Preemption|	-1.337 |
+|Immunity|	-0.722|
+|Stand_your_ground	|-0.697|
+|Child_access_prev |	-0.664 |
+|High_risk_gunpos	|-0.373 |
+|Buyer_reg |	-0.191|
+
+From the simple linear regression model above, we can see that the type of law does a fairly good job at predicting gun deaths in a given year/state as a result of what type of gun laws exist.  With a RMSE of 2.85 and a 5-fold cross validation score of .52, we can glean some insight into this relationship by taking a look at the coefficients of each law category. One would expect a negative relationship between gun laws and gun deaths, because the more restrictions on buying guns would, in theory, mean fewer guns because laws would make it more difficult to obtain them.  
+
+The largest coefficients are assualt weapons and large magazine laws and ammunition regulation laws with coefficients of 0.43 and 0.39 respectively.  That means that a one unit increase assualt weapons and large magazine laws and ammunition regulation laws leads to a 0.43 and 0.39 increase in the crude death rate.  On face value, this may seem counterintuitive that more laws would lead to more deaths.  However, we cannot definitevly conclude that more assault weapons bans and magazine restrictions will lead to a higher death rate.  It may be the case that states with a higher mean death rate will also have a higher desire to implement more laws that try to address the death rate.  
+
+Conversely, we see that preemption and immunity have the largest negative coefficients with -1.34 and -0.72 respectively.  If a state has 1 in the preemption category, it means that there are NO laws on the books that prevent local governments from regulating firearms.  This means that local governments have the ability to write their own laws specific to each locality.  This would suggest that localities with more felxibility to implement their own laws are more successful at reducing the death rate.  If a state has 1 in the immunity category, it means that there are NO laws that provide a blanket immunity to gun manufacturers for damages caused by their products. Ostensibly, this means that individuals and local and state governments have the ability to sue gun manufacturers, which may provide them an extra incentive to make sure their products are as safe as possible.  It is interesting to not that the two types of laws with the highest negative coefficients and therefore highest impact on reducing gun deaths are laws that empower local governments to make decisions about their gun laws.  Although we cannot be certain what type of laws cause fewer gun deaths, from the linear regression above, we have gained a little more insight into the types of laws that can be effective.
+
+Let's take a visual approach to seeing the relationship between when a state changes it's laws and the resulting change in death rate:
+
+![Change_Laws_Deaths](https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/Change_Laws_Deaths.png)
+
+The green area in the graph above is the area in which a state changed it's gun laws (added laws or removed laws) and it lead to a decrease in the death rate the following year.  The red shaded area is where a state changed it's laws and it lead to an increase in the death rate the following year. Believing that more gun laws lead to fewer gun deaths, we would expect to see the majority of points in the green shaded areas and to the right of zero.  The first thing I notice from the graph above is that there doesn't really seem to be a trend with the number of laws passed and the change in death rate. This makes sense -- perhaps it's the quality over quantity idiom at work here.  Just because a state passes a law does not mean it will have an effect on gun laws if the law is not substantial enough to move the needle. Another caveat is that this just looks at the law changed from one year to the next and the resulting effect on the death rate. However, it isn't a longitudial approach, which would have a greater impact on causality.  In fact, although there appear to be outliers around -0.4 in death rate change and -0.3 in death rate change, it will be more interesting to analyze the states that have singluar changes in laws passed to be able to see the effect of individual laws on death rate.
 
 
 You can use the [editor on GitHub](https://github.com/TCummings03/SyntheticControl/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
