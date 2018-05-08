@@ -29,15 +29,15 @@ By calling the .describe() pandas method on our dataframe, we can learn a few th
 
 Which states have the highest and lowest crude death rate?
 
-![CrudeDeathRateBarChart](https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/CrudeDeathsBarChart.png)
+<img src="https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/initialdf_head.png?raw=true"/>
 
 The graph above gives us a general outline of where different states (and the District of Columbia) stand on gun death rates. The average gun death rate for all states during this time period is 11.46, as mentioned above. At the higher end of the spectrum, DC's Death rate looks to be over 5x higher than Hawaii. Another interesting aspect to note, the New England states appear to be lower on the chart whereas the Southern States appear to be either in the middle or higher on the chart.  Let's explore the number of gun laws and Gun deaths over this same time period.
 
-![StrictBarChart](https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/StrictBarChart.png)
+<img src="https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/StrictBarChart.png?raw=true"/>
 
 The plot above seems to have some similarities with the death rate plot presented earlier, where the least strict states appear to be in the south and midwest and the most strict states appear to be in the New England area.
 
-![GunLawsvsGunDeaths](https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/GunLawsvsDeaths.png)
+<img src="https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/GunLawsvsDeaths.png?raw=true"/>
 
 One of the most important thing to note about the plot above is that there are two different y axis. The left axis maps the total number of gun laws in the U.S. while the right axis maps the crude death rate in the U.S. (per 100,000 people).  Also included in the plot is the expiration date for the federal assault weapons ban, which ended in 2004 after 10 years. However, the year after the assault weapons ban, there is a rise in the gun death rate that levels off for the next three years. Although we cannot determine causality just by looking at the plot above, we can say that there have been some of the deadliest mass shootings in U.S. history since the assault weapons ban expired.  Two of these, Virginia Tech and Sandy Hook, are highlighted on the plot above.  What is interesting to notice about these two events is that the subseqeunt years we see a stead increase in the number of gun laws passed with a dramatic increase in gun legislation passed after the shooting at Sandy Hook occured. 
 
@@ -100,7 +100,7 @@ Conversely, we see that preemption and immunity have the largest negative coeffi
 
 Let's take a visual approach to seeing the relationship between when a state changes it's laws and the resulting change in death rate:
 
-![Change_Laws_Deaths](https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/Change_Laws_Deaths.png)
+<img src="https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/Change_Laws_Deaths.png?raw=true"/>
 
 The green area in the graph above is the area in which a state changed it's gun laws (added laws or removed laws) and it lead to a decrease in the death rate the following year.  The red shaded area is where a state changed it's laws and it lead to an increase in the death rate the following year. Believing that more gun laws lead to fewer gun deaths, we would expect to see the majority of points in the green shaded areas and to the right of zero.  The first thing I notice from the graph above is that there doesn't really seem to be a trend with the number of laws passed and the change in death rate. This makes sense -- perhaps it's the quality over quantity idiom at work here.  Just because a state passes a law does not mean it will have an effect on gun laws if the law is not substantial enough to move the needle. Another caveat is that this just looks at the law changed from one year to the next and the resulting effect on the death rate. However, it isn't a longitudial approach, which would have a greater impact on causality.  In fact, although there appear to be outliers around -0.4 in death rate change and -0.3 in death rate change, it will be more interesting to analyze the states that have singluar changes in laws passed to be able to see the effect of individual laws on death rate.
 
@@ -182,13 +182,14 @@ Unlike ridge regression, Huber provides a linear loss to samples that are classi
 |unemp_rate|	5.533333|	5.532189|
 |gunownership_proxy|	0.614830|0.673687|
 
-![RealOregonvsSynthOregon](https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/RealOvsSynthO.png)
+
+<img src="https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/RealOvsSynthO.png?raw=true"/>
 
 The synthetic Oregon appears to match fairly closely with the real Oregon.  It is important to note that Synthetic Oregon's predictions are less accurate in the earlier years in the decade but improve towards the end of the decade.  This is important because it suggests that the synthetic control will be an effective control against the counterfactual Oregon that did not pass the background check laws.  As far as the predictor variables, we do see some variation amongst individual predictors, but overall we see that the synthetic control method has mapped on to real Oregon closely.  Furthermore, a look at the graph shows this dovetailing towards the latter years of the 1990s decade, and a convergence to the real Oregon.
 
 5. Analyze results:
 
-![FULLTREATMENT](https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/RealOvsSynthFULL.png)
+<img src="https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/RealOvsSynthFULL.png?raw=true"/>
 
 After looking at the plot above of the Synthetic Oregon vs. Real Oregon, we notice that the two begin to diverge after the laws was passed in 2000.  However, we are more concered with the difference between the two during the period after the treatment occurs.  Furthermore, we want to know if the difference lasted or if it was temporary.  As we can see from the plot above, difference between the synthetic control model and real Oregon are not zero for the period of time after the treatment and up until 2009. In 2010, they are nearly the same followed by a period of difference and then convergence again in 2014.  The average difference between the synthetic control and real Oregon over the post treatment period was 0.66, which means that on average, the crude death rate in Oregon deacreased by 0.66 from 2000-2014.  Although the synthetic control model does provide an elegant way of creating a counterfactual against which to compare a treated dependent variable, it is important to note that we cannot definitely say the background check laws were causal.  However, we can say that we are closer to causality as a result of using the synthetic control model to predict what Oregon would have done if it had not implemented background check laws.
 
