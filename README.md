@@ -29,7 +29,7 @@ By calling the .describe() pandas method on our dataframe, we can learn a few th
 
 Which states have the highest and lowest crude death rate?
 
-<img src="https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/initialdf_head.png?raw=true"/>
+<img src="https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/CrudeDeathsBarChart.png?raw=true"/>
 
 The graph above gives us a general outline of where different states (and the District of Columbia) stand on gun death rates. The average gun death rate for all states during this time period is 11.46, as mentioned above. At the higher end of the spectrum, DC's Death rate looks to be over 5x higher than Hawaii. Another interesting aspect to note, the New England states appear to be lower on the chart whereas the Southern States appear to be either in the middle or higher on the chart.  Let's explore the number of gun laws and Gun deaths over this same time period.
 
