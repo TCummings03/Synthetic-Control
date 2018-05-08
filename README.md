@@ -174,13 +174,13 @@ Unlike ridge regression, Huber provides a linear loss to samples that are classi
 |1998	|13.200|	13.099|
 |1999	|11.500|	11.374|
 |2000	|11.000|	10.945|
-|hsdiploma|	82.160000|	87.998607|
-|povrate|	12.160000|	12.088725|
-|violcrimrate|	461.550000|	461.582204|
-|conservative|	29.376778|	34.359131|
-|pct_white|	0.876854|	0.920298|
-|unemp_rate|	5.533333|	5.532189|
-|gunownership_proxy|	0.614830|0.673687|
+|hsdiploma|	82.160|	87.999|
+|povrate|	12.160|	12.089|
+|violcrimrate|	461.550|	461.582|
+|conservative|	29.377|	34.359|
+|pct_white|	0.877|	0.920|
+|unemp_rate|	5.533|	5.532|
+|gunownership_proxy|	0.615|0.674|
 
 
 <img src="https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/RealOvsSynthO.png?raw=true"/>
