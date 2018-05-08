@@ -13,7 +13,7 @@ Link To Code goes here
 Link to datasets goes here
 
 
-### Section 1: Exploratory Data Analysis
+## Section 1: Exploratory Data Analysis
 
 What has been the relationship between gun laws and gun deaths over the past decade and a half? Which states have the highest crude firearm death rate? Which states are the most/least strict when it comes to gun laws? These are the questions this section will attempt to answer.  Here, we will consider the period from 1999-2016 to do our initial analysis.
 
@@ -104,6 +104,93 @@ Let's take a visual approach to seeing the relationship between when a state cha
 
 The green area in the graph above is the area in which a state changed it's gun laws (added laws or removed laws) and it lead to a decrease in the death rate the following year.  The red shaded area is where a state changed it's laws and it lead to an increase in the death rate the following year. Believing that more gun laws lead to fewer gun deaths, we would expect to see the majority of points in the green shaded areas and to the right of zero.  The first thing I notice from the graph above is that there doesn't really seem to be a trend with the number of laws passed and the change in death rate. This makes sense -- perhaps it's the quality over quantity idiom at work here.  Just because a state passes a law does not mean it will have an effect on gun laws if the law is not substantial enough to move the needle. Another caveat is that this just looks at the law changed from one year to the next and the resulting effect on the death rate. However, it isn't a longitudial approach, which would have a greater impact on causality.  In fact, although there appear to be outliers around -0.4 in death rate change and -0.3 in death rate change, it will be more interesting to analyze the states that have singluar changes in laws passed to be able to see the effect of individual laws on death rate.
 
+## Section 2: Building the Synthetic Control Model
+
+Figuring out the effect of public policy can be difficult, especially when there are not any feasible ways to run the gold standard randomized, double blind placebo controlled experiment. It is difficult to find an effective control group, and due to lack of alternatives, what is often used as a control to understand the impact of a policy on a given state is a nearby state.  However, this approach can fall apart when there a substantial differences in political and cultural environments for nearby states.  In addition, a qualitative approach can fail to generalize since its conclusions will often be idiosyncratic to the situation at hand.  Although it may seem daunting to figure out a solution to these issues, they present opporunities for innovations in the experimental design of public policy.  One method, which has gained more traction in the public policy arena is the Synthetic Control Method (SCM).  This method created by researchers Abadie, Diamond, andHainmueller (2010).
+
+### What is the Synthetic Control Model?
+
+The synthetic control method tackles the issue of an effective control state by creating a hypothetical "synthetic" counterfactural against which the treatment state is compared.  The control is a weighted average of a group of chosen "donor" states which did not implement the targeted policy during the preintervention and post intervention period.  The two main ingredients that go into constructing the synthetic control are predictor variables, which are variables that help predict the outcome in question, and a set of outcome variables themselves from the pretreatment period.  The result is a "synthetic" state that closely matches the target state during the pretreatment period and acts as a counterfactual for what the target state would have done had it not received the treatment.  The difference between the synthetic control and target state during the post intervention period is the proposed effect of the treatment.  
+
+Policy analysts have the ability to rigorously analyze the synthetic control method.  A simple graphic representation can illustrate how well the synthetic control's path maps on to the target states path during the pretreatment period.  A listing of the donor states and their respective weights allows for greater transparency concerning how the control was contructed. In addition, ADH list a few assumptions that should be satisfied in order to accurately understand the effect of a given policy:
+
+- None of the donor pool candidates can have a similar policy change
+- The policy in the treated state cannot affect the outcome in the donor region states
+- The variables used to form the weights in the synthetic control must have similar values in donor and treated regions
+- Those variables and the outcome variables must have an approximate linear relationship
+
+Steps in the Synthetic Control Method:
+
+1. Identify predictors of the outcome variable
+2. Identify possible donor states to synthesize the control state.
+3. Choose a method for selecting predictor weights.
+4. Assess the pretreatment period goodness of fit of the synthetic control state (generated
+using the Synth package).
+5. Conduct placebo test on states in the donor pool to evaluate the significance of the results
+for the treated state.
+6. Conduct sensitivity analyses to further test the credibility of the results.
+
+
+After looking at various states and their respective gun laws, I settled on analyzing the effect of Oregon's background check laws on its crude death rate. When choosing which states/laws I wanted to focus on, I mainly employed two criteria: which laws were well known in the public dicourse today, and which states did not pass any laws for a significant length of time pretreatment and post treatment, so the effect of the treatment could be adequately analyzed.  Oregon, which passed a series of background check laws(6) in 2000, along with two dealer regulation laws, was the perfect candidate based on these criteria. Background checks also have vast support among manyAmericans, so a deeper look into their effectiveness at lowering the crude death rate could provide some valuable insight. Alas, my outcome variable is the crude death rate, my treatment is the background check laws, and my pretreatment and post-treatment periods are 1991-2000 and 2001-2014 respectively.  
+
+1. Predictor Variables - predictor variables should be chosen that have a relationship with the outcome variable.
+
+- hsdiploma - percentage of people with a high school diploma
+- povrate	- the poverty rate 
+- violcrimrate - violent crime rate
+- conservative - percentage of people who identify as "conservative"
+- pct_white - percentage of population that is white
+- unemp_rate - the unemployment rate
+- gunownership_proxy - a gun ownership proxy (firearm suicides/suicides)
+
+2. Donor States - donor states must not have passed similar laws
+
+In order to satisfy this assumption, the below 7 states had to be excluded from the donor pool. This left 42 potential states that could be used to create the synthetic control.
+
+- Maryland
+- Pennsylvania
+- Tennessee
+- Massachusetts
+- North Carolina
+- Illinois
+- Connecticut
+
+3. Huber Regression
+
+Unlike ridge regression, Huber provides a linear loss to samples that are classified as outliers. However, "the loss function is not heavily influenced by the outliers while not completely ignoring their effect." (sklearn - http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.HuberRegressor.html). After including all of our predictor variables and removing outcome lags (1991, 1993, 1995, 1997) so as not to bias our prediction, the HuberRegressor returns a RMSE of 0.171, and a 2 - fold cross validation score of 0.756.  
+
+4. Assess pre treatment fit - the synthetic control should fit the real Oregon closely during the pretreatment period so it can be used as a control during the post treatment period.  We can assess the pretreatment period by both looking at the results of the weights and visually asses by plotting the synthetic control and real Oregon during the pretreatment period:
+
+
+|index|Oregon|	Synth_Preds|
+|:---:|:----:|:-----------:|
+|1991|	12.500|	14.177|
+|1992	|14.000|	14.012|
+|1993	|12.800|	15.018|
+|1994	|14.300|	14.610|
+|1995	|13.600|	13.925|
+|1996	|13.100|	13.150|
+|1997	|13.000|	13.051|
+|1998	|13.200|	13.099|
+|1999	|11.500|	11.374|
+|2000	|11.000|	10.945|
+|hsdiploma|	82.160000|	87.998607|
+|povrate|	12.160000|	12.088725|
+|violcrimrate|	461.550000|	461.582204|
+|conservative|	29.376778|	34.359131|
+|pct_white|	0.876854|	0.920298|
+|unemp_rate|	5.533333|	5.532189|
+|gunownership_proxy|	0.614830|0.673687|
+
+![RealOregonvsSynthOregon](https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/RealOvsSynthO.png)
+
+The synthetic Oregon appears to match fairly closely with the real Oregon.  It is important to note that Synthetic Oregon's predictions are less accurate in the earlier years in the decade but improve towards the end of the decade.  This is important because it suggests that the synthetic control will be an effective control against the counterfactual Oregon that did not pass the background check laws.  As far as the predictor variables, we do see some variation amongst individual predictors, but overall we see that the synthetic control method has mapped on to real Oregon closely.  Furthermore, a look at the graph shows this dovetailing towards the latter years of the 1990s decade, and a convergence to the real Oregon.
+
+5. Analyze results:
+
+![FULLTREATMENT](https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/RealOvsSynthFULL.png)
+
+After looking at the plot above of the Synthetic Oregon vs. Real Oregon, we notice that the two begin to diverge after the laws was passed in 2000.  However, we are more concered with the difference between the two during the period after the treatment occurs.  Furthermore, we want to know if the difference lasted or if it was temporary.  As we can see from the plot above, difference between the synthetic control model and real Oregon are not zero for the period of time after the treatment and up until 2009. In 2010, they are nearly the same followed by a period of difference and then convergence again in 2014.  The average difference between the synthetic control and real Oregon over the post treatment period was 0.66, which means that on average, the crude death rate in Oregon deacreased by 0.66 from 2000-2014.  Although the synthetic control model does provide an elegant way of creating a counterfactual against which to compare a treated dependent variable, it is important to note that we cannot definitely say the background check laws were causal.  However, we can say that we are closer to causality as a result of using the synthetic control model to predict what Oregon would have done if it had not implemented background check laws.
 
 You can use the [editor on GitHub](https://github.com/TCummings03/SyntheticControl/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
