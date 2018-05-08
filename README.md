@@ -20,6 +20,7 @@ What has been the relationship between gun laws and gun deaths over the past dec
 It is important to note that this data, which comes from the CDC, uses the "Crude Death Rate" as a measure of gun deaths in the United States.  This rate is standardized for each state since it is per 100,000 people. Here is a sample of the dataframe below:
 
 ![Initialdf](https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/initialdf_head.png)
+<img src="https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/initialdf_head.png?raw=true"/>
 
 By calling the .describe() pandas method on our dataframe, we can learn a few things about the data:
 
