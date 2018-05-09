@@ -1,8 +1,8 @@
 # U.S. Gun Laws & Gun Deaths
 
-Hello! That you for viewing my project - "U.S. Gun Laws & Gun Deaths."  The goal of this project was to explore the relationship (if any) between gun laws and gun deaths in the United States.  Furthermore, the project uses the synthetic control model to analyze the effect of Oregon's background check laws that were implemented in 2000.  Unfornately, mass shootings have become more and more common in the United States, and as a result, policy dicussions arise that try to ascertain the best course of action.  Finding solutions to reduce gun violence in the U.S. is important because it has real world implications and lives are on the line.
+Hello! Thank you for viewing my project - "U.S. Gun Laws & Gun Deaths."  The goal of this project was to explore the relationship (if any) between gun laws and gun deaths in the United States.  In addition, the project uses the synthetic control method to analyze the effect of Oregon's background check laws that were implemented in 2000.  Unfornately, mass shootings have become more and more common in the United States, and as a result, policy dicussions arise that try to ascertain the best course of action.  Finding solutions to reduce gun violence in the U.S. is important because it has real world implications. When it comes to gun policy -- lives are certainly on the line.
 
-The data for this project comes from a variety of sources, which will be outlined in a citations section at the end of this project. However, all of the data came from publicly available datasets and the majority of the data came from places like the Center for Disease control, Census Bureau, FBI, and the Bureau of Labor Statistics.
+The data for this project comes from a variety of sources, which will be outlined in a citations section at the end of this project.  All of the data came from publicly available datasets, and the majority of the data came from places like the Center for Disease control, Census Bureau, FBI, and the Bureau of Labor Statistics.
 
 The analysis can be broken up into two sections:
 
@@ -23,9 +23,9 @@ It is important to note that this data, which comes from the CDC, uses the "Crud
 
 By calling the .describe() pandas method on our dataframe, we can learn a few things about the data:
 
-- The average gun death rate in the U.S. from 1999 - 2016 was 11.46, and the median death rate was 11.2
+- The average gun death rate in the U.S. from 1999 - 2016 was 11.46, and the median death rate was 11.20
 - The min and max cases, 2.2 and 34.0 respectively, are states with either relatively high death rates or relatively low death rates
-- The standard deviation was 4.43 over time time period, which means that 95% of the data lies between a gun death rate of 2.6 and 20.29
+- The standard deviation was 4.43 over time time period, which means that 95% of the data lies between a gun death rate of 2.60 and 20.29
 
 Which states have the highest and lowest crude death rate?
 
@@ -126,14 +126,12 @@ Steps in the Synthetic Control Method:
 3. Choose a method for selecting predictor weights.
 4. Assess the pretreatment period goodness of fit of the synthetic control state (generated
 using the Synth package).
-5. Conduct placebo test on states in the donor pool to evaluate the significance of the results
-for the treated state.
-6. Conduct sensitivity analyses to further test the credibility of the results.
+5. Analyze results
 
 
 After looking at various states and their respective gun laws, I settled on analyzing the effect of Oregon's background check laws on its crude death rate. When choosing which states/laws I wanted to focus on, I mainly employed two criteria: which laws were well known in the public dicourse today, and which states did not pass any laws for a significant length of time pretreatment and post treatment, so the effect of the treatment could be adequately analyzed.  Oregon, which passed a series of background check laws(6) in 2000, along with two dealer regulation laws, was the perfect candidate based on these criteria. Background checks also have vast support among manyAmericans, so a deeper look into their effectiveness at lowering the crude death rate could provide some valuable insight. Alas, my outcome variable is the crude death rate, my treatment is the background check laws, and my pretreatment and post-treatment periods are 1991-2000 and 2001-2014 respectively.  
 
-1. Predictor Variables - predictor variables should be chosen that have a relationship with the outcome variable.
+1. Predictor Variables - predictor variables should affect outcomes before and after treatment.
 
 - hsdiploma - percentage of people with a high school diploma
 - povrate	- the poverty rate 
@@ -157,7 +155,7 @@ In order to satisfy this assumption, the below 7 states had to be excluded from 
 
 3. Huber Regression
 
-Unlike ridge regression, Huber provides a linear loss to samples that are classified as outliers. However, "the loss function is not heavily influenced by the outliers while not completely ignoring their effect." (sklearn - http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.HuberRegressor.html). After including all of our predictor variables and removing outcome lags (1991, 1993, 1995, 1997) so as not to bias our prediction, the HuberRegressor returns a RMSE of 0.171, and a 2 - fold cross validation score of 0.756.  
+Unlike ridge regression, Huber provides a linear loss to samples that are classified as outliers. However, "the loss function is not heavily influenced by the outliers while not completely ignoring their effect." (sklearn - http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.HuberRegressor.html). After including all of our predictor variables and including outcome lags (1992, 1994, 1996, 1998, 1999, 2000), the HuberRegressor returns a RMSE of 0.171, and a 2 - fold cross validation score of 0.756.  This low RMSE suggests that the model fits the data well -- let us continue this analysis by looking at a plot of the synthetic control. 
 
 4. Assess pre treatment fit - the synthetic control should fit the real Oregon closely during the pretreatment period so it can be used as a control during the post treatment period.  We can assess the pretreatment period by both looking at the results of the weights and visually asses by plotting the synthetic control and real Oregon during the pretreatment period:
 
@@ -191,7 +189,11 @@ The synthetic Oregon appears to match fairly closely with the real Oregon.  It i
 
 <img src="https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/RealOvsSynthFULL.png?raw=true"/>
 
-After looking at the plot above of the Synthetic Oregon vs. Real Oregon, we notice that the two begin to diverge after the laws was passed in 2000.  However, we are more concered with the difference between the two during the period after the treatment occurs.  Furthermore, we want to know if the difference lasted or if it was temporary.  As we can see from the plot above, difference between the synthetic control model and real Oregon are not zero for the period of time after the treatment and up until 2009. In 2010, they are nearly the same followed by a period of difference and then convergence again in 2014.  The average difference between the synthetic control and real Oregon over the post treatment period was 0.66, which means that on average, the crude death rate in Oregon deacreased by 0.66 from 2000-2014.  Although the synthetic control model does provide an elegant way of creating a counterfactual against which to compare a treated dependent variable, it is important to note that we cannot definitely say the background check laws were causal.  However, we can say that we are closer to causality as a result of using the synthetic control model to predict what Oregon would have done if it had not implemented background check laws.
+After looking at the plot above of the Synthetic Oregon vs. Real Oregon, we notice that the two begin to diverge after the laws was passed in 2000.  However, we are more concered with the difference between the two during the period after the treatment occurs.  Furthermore, we want to know if the difference lasted or if it was temporary.  As we can see from the plot above, the difference between the synthetic control model and real Oregon is not zero for the period of time after the treatment and up until 2009. In 2010, they are nearly the same followed by a period of divergence and then convergence again in 2014.  The average difference between the synthetic control and real Oregon over the post treatment period was 0.66, which means that on average, the crude death rate in Oregon deacreased by 0.66 from 2000-2014.  Although the synthetic control model does provide an elegant way of creating a counterfactual against which to compare a treated dependent variable, it is important to note that we cannot definitely say the background check laws were causal.  However, we can say that we are closer to causality as a result of using the synthetic control model to predict what Oregon would have done if it had not implemented background check laws.
+
+Further considerations:
+
+- 
 
 SOURCES:
 
