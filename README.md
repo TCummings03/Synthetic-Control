@@ -35,7 +35,7 @@ The graph above gives us a general outline of where different states (and the Di
 
 <img src="https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/StrictBarChart.png?raw=true"/>
 
-The plot above seems to have some similarities with the death rate plot presented earlier, where the least strict states appear to be in the south and midwest and the most strict states appear to be in the New England area.
+The strictness score here was a combination of the number of laws + Cato Institute Freedom Score for each state.  The plot above seems to have some similarities with the death rate plot presented earlier, where the least strict states appear to be in the south and midwest and the most strict states appear to be in the New England area.
 
 <img src="https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/GunLawsvsDeaths.png?raw=true"/>
 
@@ -191,11 +191,27 @@ The synthetic Oregon appears to match fairly closely with the real Oregon.  It i
 
 After looking at the plot above of the Synthetic Oregon vs. Real Oregon, we notice that the two begin to diverge after the laws was passed in 2000.  However, we are more concered with the difference between the two during the period after the treatment occurs.  Furthermore, we want to know if the difference lasted or if it was temporary.  As we can see from the plot above, the difference between the synthetic control model and real Oregon is not zero for the period of time after the treatment and up until 2009. In 2010, they are nearly the same followed by a period of divergence and then convergence again in 2014.  The average difference between the synthetic control and real Oregon over the post treatment period was 0.66, which means that on average, the crude death rate in Oregon deacreased by 0.66 from 2000-2014.  Although the synthetic control model does provide an elegant way of creating a counterfactual against which to compare a treated dependent variable, it is important to note that we cannot definitely say the background check laws were causal.  However, we can say that we are closer to causality as a result of using the synthetic control model to predict what Oregon would have done if it had not implemented background check laws.
 
-Further considerations:
+Conclusion/ Further Considerations:
 
-- 
+- Background check laws are one of many laws that could be effective solutions to combatting gun violence.  However, analyzing which law works best or which combination of laws work best to curb gun violence requires robust data.  The tension here exists between the inability to to run controlled experiments on gun violence when people's lives are on the line and the recognition that inaction is not an option.  Nevertheless, the synthetic control method allows us to tackle some of these challenges by using the existing data that we have.
+
+- One of the drawbacks of the synthetic control method is that it does not include any tests of signficance that allow the analyst to contextualize the findings. However, there is a "placebo test," which allows for the analyst to run the synthetic control model on each of the donor states individually (treating one as the placebo state). The placebo state is then compared to its synthetic control. Because the donor states did not receive treatment, any variation amongst the placebo and the synthetic control is random. By comparing the RMSE of the treated state with its synthetic control vs. each placebo and their respective synthetic control, the analyst can asses whether or not the likelihood that the observed difference between the the treated state and its synthetic control was a matter of chance. However, this is particularly an issue when it comes to isolating the effect of a policy on gun violence because in longitudinal studies, there is a higher likelihood that a state will change its gun laws.  Nevertheless, the synthetic control model still provides insight into the counterfactual of a state never receiving treatment.
+
+Thank you for taking the time to read my project!
+
 
 SOURCES:
+
+1. https://www.statefirearmlaws.org/table.html
+2. https://www.freedominthe50states.org/guns
+3. CDC Underlying Cause of Death 1979 - 2016 (Firearms)
+4. https://www.nytimes.com/interactive/2017/01/10/upshot/How-to-Prevent-Gun-Deaths-The-Views-of-Experts-and-the-Public.html
+5. https://www.census.gov/geo/reference/gtc/gtc_census_divreg.html
+6. https://ucr.fbi.gov/crime-in-the-u.s
+7. https://www.icip.iastate.edu/tables/employment/unemployment-states
+8. https://www.census.gov/ces/dataproducts/demographicdata.html
+9. http://ippsr.msu.edu/public-policy/correlates-state-policy
+
 
 You can use the [editor on GitHub](https://github.com/TCummings03/SyntheticControl/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
