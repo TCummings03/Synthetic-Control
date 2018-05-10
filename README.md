@@ -159,7 +159,6 @@ Donor states must not have passed similar laws.  In order to satisfy this assump
 - North Carolina
 - Illinois
 - Connecticut
-
 3. Huber Regression
 
 Unlike ridge regression, Huber provides a linear loss to samples that are classified as outliers. However, "the loss function is not heavily influenced by the outliers while not completely ignoring their effect." (sklearn - http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.HuberRegressor.html). After including all of our predictor variables and including outcome lags (1993, 1994, 1996, 1998, 1999, 2000), the HuberRegressor returns a RMSE of 0.060, and a 2 - fold cross validation score of 0.556.  This low RMSE suggests that the model fits the data well -- let us continue this analysis by looking at a plot of the synthetic control. 
