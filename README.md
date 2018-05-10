@@ -141,7 +141,7 @@ After looking at various states and their respective gun laws, I settled on anal
 
 1. Predictor Variables
 
-Predictor variables should affect outcomes before and after treatment.
+⋅⋅⋅Predictor variables should affect outcomes before and after treatment.
 - hsdiploma - percentage of people with a high school diploma
 - povrate	- the poverty rate 
 - violcrimrate - violent crime rate
@@ -152,7 +152,7 @@ Predictor variables should affect outcomes before and after treatment.
 
 2. Donor States
 
-Donor states must not have passed similar laws.  In order to satisfy this assumption, the below 7 states had to be excluded from the donor pool. This left 42 potential states that could be used to create the synthetic control.
+⋅⋅⋅Donor states must not have passed similar laws.  In order to satisfy this assumption, the below 7 states had to be excluded from the donor pool. This left 42 potential states that could be used to create the synthetic control.
 
 - Maryland
 - Pennsylvania
@@ -164,11 +164,11 @@ Donor states must not have passed similar laws.  In order to satisfy this assump
 
 3. Huber Regression
 
-Unlike ridge regression, Huber provides a linear loss to samples that are classified as outliers. However, "the loss function is not heavily influenced by the outliers while not completely ignoring their effect." (sklearn - http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.HuberRegressor.html). After including all of our predictor variables and including outcome lags (1993, 1994, 1996, 1998, 1999, 2000), the HuberRegressor returns a RMSE of 0.060, and a 2 - fold cross validation score of 0.556.  This low RMSE suggests that the model fits the data well -- let us continue this analysis by looking at a plot of the synthetic control. 
+⋅⋅⋅Unlike ridge regression, Huber provides a linear loss to samples that are classified as outliers. However, "the loss function is not heavily influenced by the outliers while not completely ignoring their effect." (sklearn). After including all of our predictor variables and including outcome lags (1993, 1994, 1996, 1998, 1999, 2000), the HuberRegressor returns a RMSE of 0.060, and a 2 - fold cross validation score of 0.556.  This low RMSE suggests that the model fits the data well -- let us continue this analysis by looking at a plot of the synthetic control. 
 
 4. Assess pre-treatment fit  
 
-The synthetic control should fit the real Oregon closely during the pretreatment period so it can be used as a control during the post-treatment period.  We can assess the pretreatment period by both looking at the results of the weights and visually asses by plotting the synthetic control and real Oregon during the pretreatment period:
+⋅⋅⋅The synthetic control should fit the real Oregon closely during the pretreatment period so it can be used as a control during the post-treatment period.  We can assess the pretreatment period by both looking at the results of the weights and visually asses by plotting the synthetic control and real Oregon during the pretreatment period:
 
 
 |index|Oregon|	Synth_Preds|
@@ -195,7 +195,7 @@ The synthetic control should fit the real Oregon closely during the pretreatment
   <img src="https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/RealOvsSynthO.png?raw=true"/>
 </p>
 
-Synthetic Oregon appears to match fairly closely with the real Oregon.  It is important to note that Synthetic Oregon's predictions are less accurate in the earlier years of the decade but improve towards the end of the decade.  This is important because it suggests that the synthetic control will be an effective control against the counterfactual Oregon that did not pass the background check laws.  As far as the predictor variables, we do see some variation amongst individual predictors, but overall we see that the synthetic control method has mapped on to real Oregon closely.  Furthermore, a look at the graph shows this dovetailing towards the latter years of the 1990s decade and a convergence to the real Oregon.
+⋅⋅⋅Synthetic Oregon appears to match fairly closely with the real Oregon.  It is important to note that Synthetic Oregon's predictions are less accurate in the earlier years of the decade but improve towards the end of the decade.  This is important because it suggests that the synthetic control will be an effective control against the counterfactual Oregon that did not pass the background check laws.  As far as the predictor variables, we do see some variation amongst individual predictors, but overall we see that the synthetic control method has mapped on to real Oregon closely.  Furthermore, a look at the graph shows this dovetailing towards the latter years of the 1990s decade and a convergence to the real Oregon.
 
 5. Analyze results:
 
@@ -203,7 +203,7 @@ Synthetic Oregon appears to match fairly closely with the real Oregon.  It is im
   <img src="https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/RealOvsSynthFULL.png?raw=true"/>
 </p>
 
-After looking at the plot above of Synthetic Oregon vs. Real Oregon, we notice that the two begin to diverge after the laws were passed in 2000.  However, we are more concerned with the difference between the two during the period after the treatment occurs.  Furthermore, we want to know if the difference lasted or if it was temporary.  As we can see from the plot above, the difference between the synthetic control model and real Oregon is not zero for the period of time after the treatment. In 2010, they are nearly the same followed by a period of divergence and then convergence again in 2014.  The average difference between the synthetic control and real Oregon over the post-treatment period was 1.076, which means that on average, the crude death rate in Oregon decreased by 1.076 from 2000-2014.  Although the synthetic control model does provide an elegant way of creating a counterfactual against which to compare a treated dependent variable, it is important to note that we cannot definitely say the background check laws were causal.  However, we can say that we are closer to causality as a result of using the synthetic control model to predict what Oregon would have done if it had not implemented background check laws.
+⋅⋅⋅After looking at the plot above of Synthetic Oregon vs. Real Oregon, we notice that the two begin to diverge after the laws were passed in 2000.  However, we are more concerned with the difference between the two during the period after the treatment occurs.  Furthermore, we want to know if the difference lasted or if it was temporary.  As we can see from the plot above, the difference between the synthetic control model and real Oregon is not zero for the period of time after the treatment. In 2010, they are nearly the same followed by a period of divergence and then convergence again in 2014.  The average difference between the synthetic control and real Oregon over the post-treatment period was 1.076, which means that on average, the crude death rate in Oregon decreased by 1.076 from 2000-2014.  Although the synthetic control model does provide an elegant way of creating a counterfactual against which to compare a treated dependent variable, it is important to note that we cannot definitely say the background check laws were causal.  However, we can say that we are closer to causality as a result of using the synthetic control model to predict what Oregon would have done if it had not implemented background check laws.
 
 Conclusion/ Further Considerations:
 
