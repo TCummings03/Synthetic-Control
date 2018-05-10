@@ -10,8 +10,6 @@ The analysis can be broken up into two sections:
 2. Contructing the Synthetic Control
 
 Link To Code goes here
-Link to datasets goes here
-
 
 ## Section 1: Exploratory Data Analysis
 
