@@ -139,7 +139,7 @@ using the Synth package).
 
 After looking at various states and their respective gun laws, I settled on analyzing the effect of Oregon's background check laws on its crude death rate. When choosing which states/laws I wanted to focus on, I mainly employed two criteria: which laws were well known in the public discourse today, and which states did not pass any laws for a significant length of time pretreatment and post-treatment, so the effect of the treatment could be adequately analyzed.  Oregon, which passed a series of background check laws(6) in 2000, along with two dealer regulation laws, was the perfect candidate based on these criteria. Background checks also have vast support among many Americans, so a deeper look into their effectiveness at lowering the crude death rate could provide some valuable insight. Alas, my outcome variable is the crude death rate, my treatment is the background check laws, and my pretreatment and post-treatment periods are 1991-2000 and 2001-2014 respectively.  
 
-1. Predictor Variables- a
+1) Predictor Variables
 
 Predictor variables should affect outcomes before and after treatment.
 - hsdiploma - percentage of people with a high school diploma
@@ -150,7 +150,7 @@ Predictor variables should affect outcomes before and after treatment.
 - unemp_rate - the unemployment rate
 - gunownership_proxy - a gun ownership proxy (firearm suicides/suicides)
 
-2. Donor States- b
+2) Donor States
 
 Donor states must not have passed similar laws.  In order to satisfy this assumption, the below 7 states had to be excluded from the donor pool. This left 42 potential states that could be used to create the synthetic control.
 
@@ -162,11 +162,11 @@ Donor states must not have passed similar laws.  In order to satisfy this assump
 - Illinois
 - Connecticut
 
-3. Huber Regression
+3) Huber Regression
 
 Unlike ridge regression, Huber provides a linear loss to samples that are classified as outliers. However, "the loss function is not heavily influenced by the outliers while not completely ignoring their effect." (sklearn). After including all of our predictor variables and including outcome lags (1993, 1994, 1996, 1998, 1999, 2000), the HuberRegressor returns a RMSE of 0.060, and a 2 - fold cross validation score of 0.556.  This low RMSE suggests that the model fits the data well -- let us continue this analysis by looking at a plot of the synthetic control. 
 
-4. Assess pre-treatment fit  
+4) Assess pre-treatment fit  
 
 The synthetic control should fit the real Oregon closely during the pretreatment period so it can be used as a control during the post-treatment period.  We can assess the pretreatment period by both looking at the results of the weights and visually asses by plotting the synthetic control and real Oregon during the pretreatment period:
 
@@ -197,7 +197,7 @@ The synthetic control should fit the real Oregon closely during the pretreatment
 
 Synthetic Oregon appears to match fairly closely with the real Oregon.  It is important to note that Synthetic Oregon's predictions are less accurate in the earlier years of the decade but improve towards the end of the decade.  This is important because it suggests that the synthetic control will be an effective control against the counterfactual Oregon that did not pass the background check laws.  As far as the predictor variables, we do see some variation amongst individual predictors, but overall we see that the synthetic control method has mapped on to real Oregon closely.  Furthermore, a look at the graph shows this dovetailing towards the latter years of the 1990s decade and a convergence to the real Oregon.
 
-5. Analyze results:
+5) Analyze results:
 
 <p align="center">
   <img src="https://github.com/TCummings03/SyntheticControl/blob/master/Synthetic_Control_Files/RealOvsSynthFULL.png?raw=true"/>
