@@ -140,6 +140,7 @@ using the Synth package).
 After looking at various states and their respective gun laws, I settled on analyzing the effect of Oregon's background check laws on its crude death rate. When choosing which states/laws I wanted to focus on, I mainly employed two criteria: which laws were well known in the public discourse today, and which states did not pass any laws for a significant length of time pretreatment and post-treatment, so the effect of the treatment could be adequately analyzed.  Oregon, which passed a series of background check laws(6) in 2000, along with two dealer regulation laws, was the perfect candidate based on these criteria. Background checks also have vast support among many Americans, so a deeper look into their effectiveness at lowering the crude death rate could provide some valuable insight. Alas, my outcome variable is the crude death rate, my treatment is the background check laws, and my pretreatment and post-treatment periods are 1991-2000 and 2001-2014 respectively.  
 
 1. Predictor Variables
+
 Predictor variables should affect outcomes before and after treatment.
 - hsdiploma - percentage of people with a high school diploma
 - povrate	- the poverty rate 
